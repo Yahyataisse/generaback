@@ -1,49 +1,68 @@
 'use client';
 
-import { ArrowUpRight } from "lucide-react";
+import React from 'react';
+import { AlertTriangle } from 'lucide-react';
+import { UpgradeDialog } from '@/components/ui/upgrade-dialog';
+import { PricingSection } from '@/components/home/sections/pricing-section';
 
-import { Badge } from "@/components/ui/badge";
-import { Button } from "@/components/ui/button";
-
-export type ChangelogData = {
-  version: string;
-  date: string;
-  title: string;
-  description: string;
-  items?: string[];
-  image?: string;
-  button?: {
-    url: string;
-    text: string;
-  };
-};
-
-export interface Changelog1Props {
-  title?: string;
-  description?: string;
-  data?: ChangelogData[];
-  className?: string;
+interface AgentCountLimitDialogProps {
+  open: boolean;
+  onOpenChange: (open: boolean) => void;
+  currentCount: number;
+  limit: number;
+  tierName: string;
 }
 
-export const Changelog = ({
-  title = "Changelog",
-  description = "The latest updates and improvements to Suna.",
-}: Changelog1Props) => {
+export const AgentCountLimitDialog: React.FC<AgentCountLimitDialogProps> = ({
+  open,
+  onOpenChange,
+  currentCount,
+  limit,
+  tierName,
+}) => {
+  const returnUrl = typeof window !== 'undefined' ? window.location.href : '/';
+
+  const getNextTierRecommendation = () => {
+    if (tierName === 'free' || tierName === 'none') {
+      return {
+        name: 'Plus',
+        price: '$20/month',
+        agentLimit: 5,
+      };
+    } else if (tierName.includes('tier_2_20')) {
+      return {
+        name: 'Pro',
+        price: '$50/month', 
+        agentLimit: 20,
+      };
+    } else if (tierName.includes('tier_6_50')) {
+      return {
+        name: 'Business',
+        price: '$200/month',
+        agentLimit: 100,
+      };
+    }
+    return null;
+  };
+
+  const nextTier = getNextTierRecommendation();
+
   return (
-    <section id="changelog" className="py-32 px-10 lg:px-0">
-      <div className="container">
-        <div className="mx-auto max-w-3xl">
-          <h1 className="mb-4 text-3xl font-bold tracking-tight md:text-5xl">
-            {title}
-          </h1>
-          <p className="mb-6 text-base text-muted-foreground md:text-lg">
-            {description}
-          </p>
-        </div>
-        <div className="mx-auto mt-16 max-w-3xl space-y-16 md:mt-24 md:space-y-24">
-          
-        </div>
-      </div>
-    </section>
+    <UpgradeDialog
+      open={open}
+      onOpenChange={onOpenChange}
+      icon={AlertTriangle}
+      title="Agent Limit Reached"
+      description="You've reached the maximum number of agents allowed on your current plan."
+      theme="warning"
+      size="xl"
+      className="[&_.grid]:!grid-cols-4 [&_.grid]:gap-3 mt-8"
+    >
+      <PricingSection 
+        returnUrl={returnUrl} 
+        showTitleAndTabs={false} 
+        insideDialog={true} 
+      />
+    </UpgradeDialog>
   );
-};
+}; 
