@@ -464,7 +464,7 @@ export function HeroSection() {
 
   const handleChatRedirect = () => {
     // رابط الشات الخارجي - يمكن تغييره حسب الحاجة
-    window.open('https://chat.genera.dev', '_blank');
+    window.open('https://genera-chat-move.vercel.app/', '_blank');
   };
 
   return (
