@@ -62,8 +62,6 @@ export const AgentCountLimitDialog: React.FC<AgentCountLimitDialogProps> = ({
         returnUrl={returnUrl} 
         showTitleAndTabs={false} 
         insideDialog={true} 
-        showInfo={false}
-        noPadding={true}
       />
     </UpgradeDialog>
   );
