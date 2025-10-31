@@ -380,7 +380,6 @@ export function SidebarLeft({
       
       {state !== 'collapsed' && (
         <div className="px-3 py-2 relative z-10">
-          <CTACard />
         </div>
       )}
       
