@@ -135,7 +135,6 @@ export default function SubscriptionRequiredPage() {
           returnUrl={`${typeof window !== 'undefined' ? window.location.origin : ''}/dashboard?subscription=activated`}
           showTitleAndTabs={false}
           onSubscriptionUpdate={handleSubscriptionUpdate}
-          showInfo={false}
         />
         <div className="text-center text-sm text-muted-foreground -mt-10">
           <p>
